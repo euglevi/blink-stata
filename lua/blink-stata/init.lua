@@ -102,9 +102,6 @@ function Source:get_completions(context, resolve)
                 range = range,
                 newText = var_name,
             },
-            labelDetails = {
-                detail = "Stata Variable",
-            },
             kind = vim.lsp.protocol.CompletionItemKind.Variable,
         })
     end
