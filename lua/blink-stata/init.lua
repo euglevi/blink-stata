@@ -94,7 +94,7 @@ function Source:get_completions(context, resolve)
     local range = {
         ["start"] = {
             line = cur_line - 1,
-            character = cur_col,
+            character = start_col,
         },
         ["end"] = {
             line = cur_line - 1,
