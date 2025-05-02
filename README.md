@@ -23,7 +23,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
     "saghen/blink.cmp",
     dependencies = {
       {
-        "euglevi/blink-stata", -- Replace with your actual GitHub username
+        "euglevi/blink-stata", 
       },
     },
     opts = {
@@ -51,16 +51,7 @@ You can configure the plugin with these options:
 }
 ```
 
-### Setup get_var_names.do
-
-This plugin requires a Stata do-file to extract variable names from your dataset. You need to:
-
-1. Place the `get_var_names.do` file somewhere on your system (the plugin's `ado` directory is recommended)
-2. Set the path to this file in your configuration
-
-The default path is `~/ado/get_var_names.do`. If you store it elsewhere, make sure to update the `get_var_names_path` option accordingly.
-
-> Note: The `get_var_names.do` file is included in this repository. Copy it to your preferred location.
+The default is that it tracks down the do-file in the directory where the plugin is located. If you want to use a different path, you can set it in your configuration.
 
 ## Usage
 

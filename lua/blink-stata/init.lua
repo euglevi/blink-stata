@@ -13,7 +13,7 @@ local defaults = {
 
     ---path to the get_var_names.do file
     ---@type string
-    get_var_names_path = os.getenv("HOME") .. "/ado/get_var_names.do", -- Fallback default path
+    get_var_names_path = nil,
 }
 
 ---@param id string
@@ -26,6 +26,9 @@ function Source.new(id, config)
     self.name = config.name
     self.module = config.module
     self.config = config
+    -- Automatically detect plugin directory for get_var_names.do
+    local plugin_dir = vim.fn.fnamemodify(vim.api.nvim_get_runtime_file("lua/blink-stata/init.lua", false)[1], ":h:h:h")
+    defaults.get_var_names_path = plugin_dir .. "/get_var_names.do"
     self.config.opts = vim.tbl_deep_extend("force", defaults, self.config.opts or {})
 
     return self
@@ -38,8 +41,8 @@ end
 
 -- Function to get variable names from the Stata log file
 local function get_stata_var_names(dataset_name)
-    -- Use the user-defined path if provided, otherwise use the fallback path
-    local get_var_names_path = config.opts.get_var_names_path or defaults.get_var_names_path
+    -- Use the user-defined path if provided, otherwise use the auto-detected path
+    local get_var_names_path = self.config.opts.get_var_names_path
     os.execute("stata -b do " .. get_var_names_path .. " " .. dataset_name)
 
     local log_file = io.open("get_var_names.log", "r")
