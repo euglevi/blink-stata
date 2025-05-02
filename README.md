@@ -51,7 +51,7 @@ You can configure the plugin with these options:
 }
 ```
 
-The default is that it tracks down the do-file in the directory where the plugin is located. If you want to use a different path, you can set it in your configuration.
+The default is that it tracks down the do-file that is needed to extract the variables' names in the directory where the plugin is located. If you want to use a different path, you can set it in your configuration.
 
 ## Usage
 
