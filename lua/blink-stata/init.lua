@@ -10,6 +10,10 @@ local defaults = {
     ---disable on certain filetypes
     ---@type string[]?
     disable_filetypes = {},
+
+    ---path to the get_var_names.do file
+    ---@type string
+    get_var_names_path = os.getenv("HOME") .. "/ado/get_var_names.do", -- Fallback default path
 }
 
 ---@param id string
@@ -34,7 +38,9 @@ end
 
 -- Function to get variable names from the Stata log file
 local function get_stata_var_names(dataset_name)
-    os.execute("stata -b do /home/eugenio/ado/get_var_names.do " .. dataset_name)
+    -- Use the user-defined path if provided, otherwise use the fallback path
+    local get_var_names_path = config.opts.get_var_names_path or defaults.get_var_names_path
+    os.execute("stata -b do " .. get_var_names_path .. " " .. dataset_name)
 
     local log_file = io.open("get_var_names.log", "r")
     if not log_file then
@@ -75,7 +81,7 @@ end
 function Source:get_completions(context, resolve)
     local dataset_name = _G.current_dataset_name
     if not dataset_name then
-        print("No dataset set. Press <leader>d to set one.")
+        print("No dataset set. Please set one.")
         resolve()
         return
     end
