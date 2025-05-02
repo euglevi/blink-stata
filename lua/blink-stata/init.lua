@@ -40,9 +40,9 @@ function Source:enabled()
 end
 
 -- Function to get variable names from the Stata log file
-local function get_stata_var_names(dataset_name)
+local function get_stata_var_names(dataset_name, opts)
     -- Use the user-defined path if provided, otherwise use the auto-detected path
-    local get_var_names_path = self.config.opts.get_var_names_path
+    local get_var_names_path = opts.get_var_names_path
     os.execute("stata -b do " .. get_var_names_path .. " " .. dataset_name)
 
     local log_file = io.open("get_var_names.log", "r")
@@ -89,7 +89,7 @@ function Source:get_completions(context, resolve)
         return
     end
 
-    local var_names = get_stata_var_names(dataset_name)
+    local var_names = get_stata_var_names(dataset_name, self.config.opts)
     local cur_line, cur_col = unpack(context.cursor)
     local buf_text = vim.api.nvim_buf_get_lines(0, cur_line - 1, cur_line, false)[1] or ""
 
